@@ -1,0 +1,32 @@
+
+
+[
+    {"subCat":"Apple","category":"smartphones"},
+    {"subCat":"Apple","category":"laptops"},
+    {"subCat":"Samsung","category":"laptops"},
+    {"subCat":"OPPO","category":"smartphones"},
+    {"subCat":"Huawei","category":"smartphones"},
+    {"subCat":"Microsoft Surface","category":"laptops"},
+    {"subCat":"Infinix","category":"laptops"},
+    {"subCat":"HP Pavilion","category":"laptops"},
+    {"subCat":"Impression of Acqua Di Gio","category":"fragrances"},
+    {"subCat":"Royal_Mirage","category":"fragrances"},
+    {"subCat":"Fog Scent Xpressio","category":"fragrances"},
+    {"subCat":"Al Munakh","category":"fragrances"},
+    {"subCat":"Lord - Al-Rehab","category":"fragrances"},
+    {"subCat":"LOreal Paris","category":"skincare"},
+    {"subCat":"Hemani Tea","category":"skincare"},
+    {"subCat":"Dermive","category":"skincare"},
+    {"subCat":"ROREC White Rice","category":"skincare"},
+    {"subCat":"Fair & Clear","category":"skincare"},
+    {"subCat":"Saaf & Khaas","category":"groceries"},
+    {"subCat":"Bake Parlor Big","category":"groceries"},
+    {"subCat":"Baking Food Items","category":"groceries"},
+    {"subCat":"fauji","category":"groceries"},
+    {"subCat":"Dry Rose","category":"groceries"},
+    {"subCat":"Boho Decor","category":"home-decoration"},
+    {"subCat":"Flying Wooden","category":"home-decoration"},
+    {"subCat":"LED Lights","category":"home-decoration"},
+    {"subCat":"luxury palace","category":"home-decoration"},
+    {"subCat":"Golden","category":"home-decoration"}
+    ]
