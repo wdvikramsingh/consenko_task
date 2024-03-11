@@ -8,20 +8,19 @@ import {
   TableRow,
   Paper,
   TablePagination,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Button,
   Stack,
   Box,
+  Tab,
+  Tabs,
+  Typography,
 } from "@mui/material";
 import ProductList from "../src/products.json";
 import categories from "../src/categories.json";
 import subcategories from "../src/subCategories.json";
 
 function App() {
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("smartphones");
   const [subcategory, setSubcategory] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -51,6 +50,23 @@ function App() {
     setProducts(filteredProducts);
   }, [category, subcategory]);
 
+  useEffect(() => {
+    // Select the first subcategory when a category is chosen
+    if (category) {
+      const defaultSubcategory = getDefaultSubcategory(category);
+      setSubcategory(defaultSubcategory);
+    }
+  }, [category]);
+
+  const getDefaultSubcategory = (selectedCategory) => {
+    const categorySubcategories = subcategories.filter(
+      (subcat) => subcat.category === selectedCategory
+    );
+    return categorySubcategories.length > 0
+      ? categorySubcategories[0].subCat
+      : "";
+  };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -60,22 +76,16 @@ function App() {
     setPage(0);
   };
 
-  const handleCategoryChange = (event) => {
-    const selectedCategory = event.target.value;
-    setCategory(selectedCategory);
-    const firstSubcategory = subcategories.find(
-      (subcat) => subcat.category === selectedCategory
-    );
-    setSubcategory(firstSubcategory ? firstSubcategory.subCat : "");
+  const handleCategoryChange = (event, newCategory) => {
+    setCategory(newCategory);
   };
 
-  const handleSubcategoryChange = (event) => {
-    setSubcategory(event.target.value);
+  const handleSubcategoryChange = (event, newSubcategory) => {
+    setSubcategory(newSubcategory);
   };
 
   const handleSave = () => {
     console.log("Edited Prices:", editedPrices);
-    // You can send the edited prices to an API endpoint or perform any other action here
   };
 
   const handlePriceChange = (productId, price) => {
@@ -86,39 +96,61 @@ function App() {
   };
 
   return (
-    <Box style={{ margin: "20px" }}>
-      <Stack direction="row" spacing={2} style={{ marginTop: "100px" }}>
-        <FormControl style={{ marginBottom: "16px", width: "200px" }}>
-          <InputLabel>Category</InputLabel>
-          <Select value={category} onChange={handleCategoryChange}>
-            <MenuItem value="">All Categories</MenuItem>
-            {categories.map((category) => (
-              <MenuItem key={category} value={category}>
-                {category}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        {category && (
-          <FormControl style={{ marginBottom: "16px", width: "200px" }}>
-            <InputLabel>Subcategory</InputLabel>
-            <Select value={subcategory} onChange={handleSubcategoryChange}>
-              <MenuItem value="">All Subcategories</MenuItem>
-              {subcategories
-                .filter((subcat) => subcat.category === category)
-                .map((subcat) => (
-                  <MenuItem key={subcat.subCat} value={subcat.subCat}>
-                    {subcat.subCat}
-                  </MenuItem>
-                ))}
-            </Select>
-          </FormControl>
-        )}
+    <Box
+      boxShadow={2}
+      m={1}
+      p={5}
+      style={{ marginTop: "20px", borderRadius: "10px" }}
+    >
+      <Stack
+        direction="row"
+        spacing={6}
+        alignItems={"center"}
+        sx={{ marginTop: "20px", marginBottom: "20px" }}
+      >
+        <Typography>Categories</Typography>
+        <Tabs
+          value={category}
+          onChange={handleCategoryChange}
+          aria-label="Category tabs"
+          sx={{ background: "#dbe4f6" }}
+        >
+          <Tab label="All Categories" value="" />
+          {categories.map((categoryItem) => (
+            <Tab key={categoryItem} label={categoryItem} value={categoryItem} />
+          ))}
+        </Tabs>
       </Stack>
+      {category && (
+        <Stack
+          direction="row"
+          spacing={2}
+          alignItems={"center"}
+          sx={{ marginTop: "20px", marginBottom: "20px" }}
+        >
+          <Typography>Sub Categories</Typography>
+          <Tabs
+            value={subcategory}
+            onChange={handleSubcategoryChange}
+            aria-label="Subcategory tabs"
+            sx={{ background: "#dbe4f6" }}
+          >
+            {subcategories
+              .filter((subcat) => subcat.category === category)
+              .map((subcat) => (
+                <Tab
+                  key={subcat.subCat}
+                  label={subcat.subCat}
+                  value={subcat.subCat}
+                />
+              ))}
+          </Tabs>
+        </Stack>
+      )}
 
       <TableContainer component={Paper}>
         <Table>
-          <TableHead style={{ backgroundColor: "#f0f0f0" }}>
+          <TableHead style={{ backgroundColor: "#4a72d6", color: "#fff" }}>
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Price</TableCell>
@@ -131,7 +163,7 @@ function App() {
             {products
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((product) => (
-                <TableRow key={product.id}>
+                <TableRow key={product.id} className="tableRow">
                   <TableCell>{product.title}</TableCell>
                   <TableCell>
                     <input
